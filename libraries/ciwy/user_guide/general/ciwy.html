@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Ciwy Class : CIwY User Guide</title>
+
+    <link  href="../images/favicon.gif" rel="icon" type="image/gif"/>
+    <style type='text/css' media='all'>@import url('../userguide.css');</style>
+    <link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+    <script type="text/javascript" src="../nav/nav.js"></script>
+    <script type="text/javascript" src="../nav/prototype.lite.js"></script>
+    <script type="text/javascript" src="../nav/moo.fx.js"></script>
+    <script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+    <meta http-equiv='expires' content='-1' />
+    <meta http-equiv= 'pragma' content='no-cache' />
+    <meta name='robots' content='all' />
+    <meta name='author' content='Fabio Ingala' />
+    <meta name='description' content='CIwY User Guide' />
+
+  </head>
+  <body>
+
+    <!-- START NAVIGATION -->
+    <div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+    <div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+    <div id="masthead">
+      <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+        <tr>
+          <td><h1>CodeIgniter wrapper for YUI - CIwY 0.0.03 Beta</h1></td>
+          <td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+        </tr>
+      </table>
+    </div>
+    <!-- END NAVIGATION -->
+
+    <!-- START BREADCRUMB -->
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+      <tr>
+        <td id="breadcrumb">
+          <a href="http://ciwy.sourceforge.net/">CIwY Home</a> &nbsp;&#8250;&nbsp;
+          <a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+          Ciwy Class
+        </td>
+        <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="ciwy.sourceforge.net/user_guide/" />Search CIwY User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+      </tr>
+    </table>
+    <!-- END BREADCRUMB -->
+
+    <br clear="all" />
+
+    <!-- START CONTENT -->
+    <div id="content">
+
+      <h1>Ciwy Class</h1>
+      <p>The Ciwy class permits to prepare the right environment for YUI components.</p>
+
+      <h2>Initializing the Class</h2>
+      <p>According with CodeIgniter, the Ciwy classe is initialized in your controller using the <dfn>$this->load->library()</dfn> function:</p>
+      <code>$this->load->library('ciwy');</code>
+      <p>Once loaded, the Ciwy object will be available using: <dfn>$this->ciwy</dfn></p>
+
+      <h2>Loading a CIwY component</h2>
+      <p>To load a component (widget or array) to be used in CIwY, just use the <dfn>$this->ciwy->loadComponent()</dfn> function</p>
+      <code>$instance = $this->ciwy->loadComponent('calendar');</code>
+      <p>The function will return the name of the instance (automaticcaly generated) for the loaded component. It is possible to force the instance name.<br />
+      Alternative syntax is permitted, in this case the function will return an array of istances where the key is the instance name and the value is the component name:<br />
+      <ul>
+        <li>Multiple component load with automatic instance name generation provided to the function as multiple function arguments</li>
+        <code>$instance = $this->ciwy->loadComponent('animation', 'calendar', 'autocomplete');</code>
+        <li>Multiple component load with automatic instance name generation provided to the function as list of component name</li>
+        <code>
+          $components_to_load = array('animation', 'calendar', 'autocomplete');<br />
+          $instance = $this->ciwy->loadComponent($components_to_load);
+        </code>
+        <li>Multiple component load with given instance name provided to the function as associative array where the keys are the instance names and the values are the component names</li>
+        <code>
+          $components_to_load = array('anim1' => 'animation', 'myCal' => 'calendar', 'ac_instance' => 'autocomplete');<br />
+          $instance = $this->ciwy->loadComponent($components_to_load);
+        </code>
+      </ul>
+      </p>
+      <p>YUI components are automatic loaded by the CIwY component loader, if you need to load only YUI component, please see <a href="../general/yuiloader.html"><strong>Loading a YUI component</strong></a> page.<br />
+        See the <strong>CIwY Widget Reference</strong> and <strong>CIwY Utility Reference</strong> pages for more details.</p>
+
+    </div>
+    <!-- END CONTENT -->
+
+    <div id="footer">
+      <p>
+        Previous Topic:&nbsp;&nbsp;<a href="../overview/getting_started.html">Getting Started</a>
+        &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        Next Topic:&nbsp;&nbsp;<a href="../general/page_render.html">Render pages with YUI components</a>
+      </p>
+      <p><a href="http://codeigniter.com">CodeIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2006-2009 &nbsp;&middot;&nbsp; <a href="http://ellislab.com/">Ellislab, Inc.</a></p>
+    </div>
+
+  </body>
+</html>

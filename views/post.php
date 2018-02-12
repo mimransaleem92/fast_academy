@@ -1,0 +1,3 @@
+<span>
+The whole idea of Template is to improve the interface between your application's business logic and presentational markup by providing a very flexible wrapper to CI's Views implementation. Consider an application that required two or more markedly different templates for different pages or sections (like a blog with a main HTML template and RSS feed template). Or, consider if a plugin architecture was to allow for making components available to all your pages (like a User plugin that provides a login form). Rather than limiting it to using the regions defined in your configuration, a plugin should be able to dynamically provide its own regions for writing. These methods allow for these and other development scenarios.
+</span>

@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Autocomplete Widget : CIwY User Guide</title>
+
+    <link  href="../images/favicon.gif" rel="icon" type="image/gif"/>
+    <style type='text/css' media='all'>@import url('../userguide.css');</style>
+    <link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+    <script type="text/javascript" src="../nav/nav.js"></script>
+    <script type="text/javascript" src="../nav/prototype.lite.js"></script>
+    <script type="text/javascript" src="../nav/moo.fx.js"></script>
+    <script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+    <meta http-equiv='expires' content='-1' />
+    <meta http-equiv= 'pragma' content='no-cache' />
+    <meta name='robots' content='all' />
+    <meta name='author' content='Fabio Ingala' />
+    <meta name='description' content='CIwY User Guide' />
+
+  </head>
+  <body>
+
+    <!-- START NAVIGATION -->
+    <div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+    <div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+    <div id="masthead">
+      <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+        <tr>
+          <td><h1>CodeIgniter wrapper for YUI - CIwY 0.0.03 Beta</h1></td>
+          <td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+        </tr>
+      </table>
+    </div>
+    <!-- END NAVIGATION -->
+
+    <!-- START BREADCRUMB -->
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+      <tr>
+        <td id="breadcrumb">
+          <a href="http://ciwy.sourceforge.net/">CIwY Home</a> &nbsp;&#8250;&nbsp;
+          <a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+          Autocomplete Widget
+        </td>
+        <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="ciwy.sourceforge.net/user_guide/" />Search CIwY User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+      </tr>
+    </table>
+    <!-- END BREADCRUMB -->
+
+    <br clear="all" />
+
+    <!-- START CONTENT -->
+    <div id="content">
+
+      <h1>Autocomplete Widget</h1>
+      <p>The Autocomplete widget provides functions that enable you to embed the <a href="http://developer.yahoo.com/yui/autocomplete/">YUI autocomplete widget</a> in your page.</p>
+
+      <h2>Initializing the Class</h2>
+      <p>Like in CodeIgniter, the Autocomplete Widget is initialized in your controller using the <dfn>$this->ciwy->loadComponent()</dfn> function:</p>
+
+      <code>$this->ciwy->loadComponent('autocomplete');</code>
+      <p>Once loaded, the Autocomplete Widget is ready to be used in your wiev<br />
+         <code>
+           echo $this->ciwy->yuiTags();<br />
+           echo $this->ciwy->container('autocomplete');<br />
+           echo $this->ciwy->generate();<br />
+         </code>
+        If necessary you can change widget property using<br />
+        <ul>
+          <li><dfn>$this->ciwy->autocomplete->setProperty();</dfn></li>
+          <code>
+            $this->ciwy->autocomplete->setProperty(array('useShadow' => true));
+          </code>
+        </ul>
+      </p>
+
+      <h2>Examples</h2>
+      <p>Here is an example showing how you can create a autocomplete widget setting some properties.</p>
+      <code>
+        $this->ciwy->loadComponent('autocomplete');<br />
+        echo $this->ciwy->yuiTags();<br />
+        echo $this->ciwy->container('autocomplete');<br />
+        echo $this->ciwy->generate();<br />
+      </code>
+
+      <h2>$this->ciwy->autocomplete->container();</h2>
+      <p>Returns HTML code for the autocomplete container.</p>
+      <code>
+        echo $this->ciwy->autocomplete->container();<br />
+        // Produces: &lt;div id="autocomplete"&gt&lt;/div&gt;<br />
+      </code>
+
+      <h2>$this->ciwy->autocomplete->create_istance();</h2>
+      <p>Create a new autocomplete widget istance and return its name.<br />
+      The function accept as optional parameter the name of the new istance, if exists an istance with the same name, the function will first generate a new istance name for you and then the new istance itself.</p>
+      <code>
+        $this->ciwy->autocomplete->create_istance('ac1');<br />
+      </code>
+
+      <h2>$this->ciwy->autocomplete->generate();</h2>
+      <p>Return HTML code with JavaScript inside</p>
+      <code>
+        &lt;script type="text/javascript"&gt;<br />
+        &nbsp;&nbsp;(function() {<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;var Dom = YAHOO.util.Dom,<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;Event = YAHOO.util.Event;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;var ds1 = new YAHOO.util.LocalDataSource(<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Dakota", "North Carolina", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;);<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;ds1.responseType   = YAHOO.util.LocalDataSource.TYPE_JSARRAY;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;ds1.responseSchema = {<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fields : ["field"]<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;};<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;var ac1 = new YAHOO.widget.AutoComplete("ac1_input", "ac1Container", ds1);<br />
+        &nbsp;&nbsp;})();<br />
+        &lt;/script&gt;
+      </code>
+
+      <h2>$this->ciwy->autocomplete->setProperty();</h2>
+      <p>Used to manually set YUI autocomplete widget property. The function will prevent to set invalid property name.</p>
+      <code>
+        $property = array('useShadow' => true);<br />
+        $this->ciwy->autocomplete->setProperty($property);<br />
+      </code>
+
+    </div>
+    <!-- END CONTENT -->
+
+    <div id="footer">
+      <p>
+        Previous Topic:&nbsp;&nbsp;<a href="../general/reserved_names.html">Reserved names</a>
+        &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        Next Topic:&nbsp;&nbsp;<a href="../components/calendar.html">Calendar Widget</a></p>
+      <p><a href="http://ciwy.sourceforge.net/">CIwY</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009-2010 &nbsp;&middot;&nbsp; <a href="http://fabio.ingala.it/">Fabio Ingala</a></p>
+    </div>
+
+  </body>
+</html>

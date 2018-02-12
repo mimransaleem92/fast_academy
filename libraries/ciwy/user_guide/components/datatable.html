@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Datatable Widget : CIwY User Guide</title>
+
+    <link  href="../images/favicon.gif" rel="icon" type="image/gif"/>
+    <style type='text/css' media='all'>@import url('../userguide.css');</style>
+
+    <script type="text/javascript" src="../nav/nav.js"></script>
+    <script type="text/javascript" src="../nav/prototype.lite.js"></script>
+    <script type="text/javascript" src="../nav/moo.fx.js"></script>
+    <script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+    <meta http-equiv='expires' content='-1' />
+    <meta http-equiv= 'pragma' content='no-cache' />
+    <meta name='robots' content='all' />
+    <meta name='author' content='Fabio Ingala' />
+    <meta name='description' content='CIwY User Guide' />
+
+  </head>
+  <body>
+
+    <!-- START NAVIGATION -->
+    <div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+    <div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+    <div id="masthead">
+      <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+        <tr>
+          <td><h1>CodeIgniter wrapper for YUI - CIwY 0.0.03 Beta</h1></td>
+          <td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+        </tr>
+      </table>
+    </div>
+    <!-- END NAVIGATION -->
+
+    <!-- START BREADCRUMB -->
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+      <tr>
+        <td id="breadcrumb">
+          <a href="http://ciwy.sourceforge.net/">CIwY Home</a> &nbsp;&#8250;&nbsp;
+          <a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+          Datatable Widget
+        </td>
+        <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="ciwy.sourceforge.net/user_guide/" />Search CIwY User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+      </tr>
+    </table>
+    <!-- END BREADCRUMB -->
+
+    <br clear="all" />
+
+    <!-- START CONTENT -->
+    <div id="content">
+
+      <h1>Datatable Widget</h1>
+      <p>The Datatable widget provides functions that enable you to embed the <a href="http://developer.yahoo.com/yui/datatable/">YUI datatable widget</a> in your page.</p>
+
+      <h2>Initializing the Class</h2>
+      <p>Like in CodeIgniter, the Data table Widget is initialized in your controller using the <dfn>$this->ciwy->loadComponent</dfn> function:</p>
+
+      <code>$this->ciwy->loadComponent('datatable');</code>
+      <p>Once loaded, the Data table Widget is ready to be used in your wiev<br />
+        <code>
+          echo $this->ciwy->yuiTags();<br />
+          echo $this->ciwy->container('datatable');<br />
+          echo $this->ciwy->generate();<br />
+        </code>
+        If necessary you can change widget property using<br />
+        <ul>
+          <li><dfn>$this->ciwy->datatable->setProperty();</dfn></li>
+          <code>
+            $this->ciwy->datatable->setProperty(array('caption' => 'Table caption', 'draggableColumns' => true));<br />
+          </code>
+          <li><dfn>$this->ciwy->datatable->setColumnProperty();</dfn></li>
+          <code>
+          $this->ciwy->datatable->setColumnProperty(<br />
+          &nbsp;&nbsp;array(<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;'id'       => array('label' => 'ID',     'sortable' => true,  'resizeable' => true),<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;'amount'   => array('label' => 'Amount', 'sortable' => true,  'resizeable' => true),<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;'quantity' => array('label' => 'Q.ta',   'sortable' => true,  'resizeable' => false),<br />
+          &nbsp;&nbsp;'title'    => array('label' => 'Titolo', 'sortable' => false, 'resizeable' => true),<br />
+          &nbsp;&nbsp;)<br />
+          );
+          </code>
+        </ul>
+      </p>
+
+      <h2>Examples</h2>
+      <p>Here is an example showing how you can create a datatable widget setting some properties.</p>
+      <code>
+        $this->ciwy->loadComponent('datatable');<br />
+        $this->ciwy->datatable->setProperty(array('caption' => 'Table caption', 'draggableColumns' => true));<br />
+        $this->ciwy->datatable->setColumnProperty(<br />
+        &nbsp;&nbsp;array(<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;'id'       => array('label' => 'ID',     'sortable' => true,  'resizeable' => true),<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;'amount'   => array('label' => 'Amount', 'sortable' => true,  'resizeable' => true),<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;'quantity' => array('label' => 'Q.ta',   'sortable' => true,  'resizeable' => false),<br />
+        &nbsp;&nbsp;'title'    => array('label' => 'Titolo', 'sortable' => false, 'resizeable' => true),<br />
+        &nbsp;&nbsp;)<br />
+        );
+        echo $this->ciwy->yuiTags();<br />
+        echo $this->ciwy->container('datatable');<br />
+        echo $this->ciwy->generate();<br />
+      </code>
+
+      <h2>$this->ciwy->datatable->container();</h2>
+      <p>Returns HTML code for the datatable container.</p>
+      <code>
+        echo $this->ciwy->datatable->container();<br />
+        // Produces: &lt;div id="datatable"&gt&lt;/div&gt;<br />
+      </code>
+
+      <h2>$this->ciwy->datatable->create_istance();</h2>
+      <p>Create a new datatable widget istance and return its name.<br />
+      The function accept as optional parameter the name of the new istance, if exists an istance with the same name, the function will first generate a new istance name for you and then the new istance itself.</p>
+      <code>
+        $this->ciwy->datatable->create_istance('dt1');<br />
+      </code>
+
+      <h2>$this->ciwy->datatable->generate();</h2>
+      <p>Return HTML code with JavaScript inside</p>
+      <code>
+        &lt;script type="text/javascript"&gt;<br />
+        (function() {
+        &nbsp;&nbsp;var Dom = YAHOO.util.Dom,
+        &nbsp;&nbsp;&nbsp;&nbsp;Event = YAHOO.util.Event;
+        &nbsp;&nbsp;var ds1 = new YAHOO.util.LocalDataSource(
+        &nbsp;&nbsp;&nbsp;&nbsp;[
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ "id": "po-0000", "date": "24/02/1981", "quantity": 1, "amount": 730.22, "title": "A title for 1" },
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ "id": "po-0168", "date": "25/02/1980", "quantity": 2, "amount": 118.9, "title": "A title for 2" },
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ "id": "po-0169", "date": "26/02/1980", "quantity": 30, "amount": 323.33, "title": "A title for 3" },
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ "id": "po-0170", "date": "27/02/1980", "quantity": 42, "amount": 60.11, "title": "A title for 4" },
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ "id": "po-0171", "date": "28/02/1980", "quantity": 5, "amount": 252.99, "title": "A title for 5" }
+        &nbsp;&nbsp;&nbsp;&nbsp;]
+        &nbsp;&nbsp;);
+        &nbsp;&nbsp;ds1.responseType   = YAHOO.util.LocalDataSource.TYPE_JSARRAY;
+        &nbsp;&nbsp;ds1.responseSchema = {
+        &nbsp;&nbsp;&nbsp;&nbsp;fields : ["id", "date", "quantity", "amount", "title"]
+        &nbsp;&nbsp;};
+        &nbsp;&nbsp;var dt1ColumnDefs =
+        &nbsp;&nbsp;&nbsp;&nbsp;[
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ "label": "ID", "sortable": true, "resizeable": true, "key": "id" },
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ "label": "Amount", "sortable": true, "resizeable": true, "key": "amount" },
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ "label": "Q.ta", "sortable": true, "resizeable": false, "key": "quantity" },
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ "label": "Titolo", "sortable": false, "resizeable": true, "key": "title" }
+        &nbsp;&nbsp;&nbsp;&nbsp;];
+        &nbsp;&nbsp;var dt1Configs = { "caption": "Table caption", "draggableColumns": true };
+        &nbsp;&nbsp;var dt1 = new YAHOO.widget.DataTable("dt1Container", dt1ColumnDefs, ds1, dt1Configs);
+        })();
+        &lt;/script&gt;
+      </code>
+
+      <h2>$this->ciwy->datatable->setProperty();</h2>
+      <p>Used to manually set YUI datatable widget property. The function will prevent to set invalid property name.</p>
+      <code>
+        $property = array('caption' => 'Table caption');<br />
+        $this->ciwy->datatable->setProperty($property);<br />
+      </code>
+
+    </div>
+    <!-- END CONTENT -->
+
+    <div id="footer">
+      <p>
+        Previous Topic:&nbsp;&nbsp;<a href="../components/calendar.html">Calendar Widget</a>
+        &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        Next Topic:&nbsp;&nbsp;<a href="../components/animation.html">Animation Utility</a></p>
+      <p><a href="http://ciwy.sourceforge.net/">CIwY</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009-2010 &nbsp;&middot;&nbsp; <a href="http://fabio.ingala.it/">Fabio Ingala</a></p>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Loading a YUI component : CIwY User Guide</title>
+
+    <link  href="../images/favicon.gif" rel="icon" type="image/gif"/>
+    <style type='text/css' media='all'>@import url('../userguide.css');</style>
+    <link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+    <script type="text/javascript" src="../nav/nav.js"></script>
+    <script type="text/javascript" src="../nav/prototype.lite.js"></script>
+    <script type="text/javascript" src="../nav/moo.fx.js"></script>
+    <script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+    <meta http-equiv='expires' content='-1' />
+    <meta http-equiv= 'pragma' content='no-cache' />
+    <meta name='robots' content='all' />
+    <meta name='author' content='Fabio Ingala' />
+    <meta name='description' content='CIwY User Guide' />
+
+  </head>
+  <body>
+
+    <!-- START NAVIGATION -->
+    <div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+    <div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+    <div id="masthead">
+      <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+        <tr>
+          <td><h1>CodeIgniter wrapper for YUI - CIwY 0.0.03 Beta</h1></td>
+          <td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+        </tr>
+      </table>
+    </div>
+    <!-- END NAVIGATION -->
+
+    <!-- START BREADCRUMB -->
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+      <tr>
+        <td id="breadcrumb">
+          <a href="http://ciwy.sourceforge.net/">CIwY Home</a> &nbsp;&#8250;&nbsp;
+          <a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+          Loading a YUI component
+        </td>
+        <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="ciwy.sourceforge.net/user_guide/" />Search CIwY User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+      </tr>
+    </table>
+    <!-- END BREADCRUMB -->
+
+    <br clear="all" />
+
+    <!-- START CONTENT -->
+    <div id="content">
+
+      <h1>Loading a YUI component</h1>
+      <p>With CIwY you have gained another php class that helps to embed YUI in HTML page in a correct way. It is <strong>YUILoader</strong>.<br />
+        YUILoader has two method to load YUI:
+        <ul>
+          <li>The PHP method: PHP generates HTML code to embed YUI</li>
+          <li>The JS method: Generation of JS code that will embed YUI</li>
+        </ul>
+        YUILoader class is automatically inizialized and used by CIwY, but if you want you can freely use it with <dfn>$this->yuiloader</dfn></p>
+      <p class="important"><strong>Note:</strong> Be careful using this class to prevent unpredictable behaviour.</p>
+
+      <h2>YUILoader: The PHP method</h2>
+      <p>
+        The CIwY class has the <var>$yuiloader_method</var> property that tells ciwy which loader method use between '<kbd>php</kbd>' and '<kbd>js</kbd>'. Default is '<strong>php</strong>'.<br />
+        <p class="important"><strong>Note:</strong> This class is derived from <a href="http://developer.yahoo.com/yui/phploader/">YUI PHP Loader Utility [beta]</a>.</p>
+        With the PHP method YUILoader will generate HTML code to embed YUI.
+      </p>
+
+      <h2>YUILoader: The JS method</h2>
+      <p>
+        If you changed the default loader method in '<kbd>js</kbd>', in that case YUILoader will generate JS code that will embed YUI in the page.
+      </p>
+
+      <h2>Load YUI components</h2>
+      <p>To load one o more YUI component just use in your controller <dfn>$this->yuiloader->load()</dfn> function providing one component name for each function parameter</p>
+      <code>$this->yuiloader('calendar', 'autocomplete');</code>
+
+      <h2>Embed YUI in the HTML page</h2>
+      <p>To embed YUI the HTML page just use in your view <dfn>$this->ciwy->yuiTags()</dfn> o <dfn>$this->yuiloader->tags()</dfn> function</p>
+      <code>&lt;?php echo $this->ciwy->yuiTags(); ?&gt;</code>
+      See the <a href="../general/page_render.html"><strong>Render pages with YUI components</strong></a> page for more details.
+
+    </div>
+    <!-- END CONTENT -->
+
+    <div id="footer">
+      <p>
+        Previous Topic:&nbsp;&nbsp;<a href="../general/page_render.html">Render pages with YUI components</a>
+        &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        Next Topic:&nbsp;&nbsp;<a href="../general/reserved_names.html">Reserved names</a>
+      </p>
+      <p><a href="http://codeigniter.com">CodeIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2006-2009 &nbsp;&middot;&nbsp; <a href="http://ellislab.com/">Ellislab, Inc.</a></p>
+    </div>
+
+  </body>
+</html>

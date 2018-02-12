@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Render YUI pages : CIwY User Guide</title>
+
+    <link  href="../images/favicon.gif" rel="icon" type="image/gif"/>
+    <style type='text/css' media='all'>@import url('../userguide.css');</style>
+    <link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+    <script type="text/javascript" src="../nav/nav.js"></script>
+    <script type="text/javascript" src="../nav/prototype.lite.js"></script>
+    <script type="text/javascript" src="../nav/moo.fx.js"></script>
+    <script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+    <meta http-equiv='expires' content='-1' />
+    <meta http-equiv= 'pragma' content='no-cache' />
+    <meta name='robots' content='all' />
+    <meta name='author' content='Fabio Ingala' />
+    <meta name='description' content='CIwY User Guide' />
+
+  </head>
+  <body>
+
+    <!-- START NAVIGATION -->
+    <div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+    <div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+    <div id="masthead">
+      <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+        <tr>
+          <td><h1>CodeIgniter wrapper for YUI - CIwY 0.0.03 Beta</h1></td>
+          <td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+        </tr>
+      </table>
+    </div>
+    <!-- END NAVIGATION -->
+
+    <!-- START BREADCRUMB -->
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+      <tr>
+        <td id="breadcrumb">
+          <a href="http://ciwy.sourceforge.net/">CIwY Home</a> &nbsp;&#8250;&nbsp;
+          <a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+          Render YUI pages
+        </td>
+        <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="ciwy.sourceforge.net/user_guide/" />Search CIwY User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+      </tr>
+    </table>
+    <!-- END BREADCRUMB -->
+
+    <br clear="all" />
+
+    <!-- START CONTENT -->
+    <div id="content">
+
+      <h1>Render pages with YUI components</h1>
+      <p>Once loaded CIwY class and almost one component (es. calendar), to get YUI component working is necessary to render the HTML page</p>
+
+      <h2>Recipe ingredients</h2>
+      <p>To render a YUI working page you need:
+        <ul>
+          <li>$this->ciwy->yuiTags() function</li>
+          <li>$this->ciwy->container() function</li>
+          <li>$this->ciwy->generate() function</li>
+          <li>An HTML page</li>
+        </ul>
+        All theese ingredients are provided by CIwY for you ...
+      </p>
+
+      <h3>Embed YUI core in the HTML page</h3>
+      <p>
+        YUI to work needs to be included in the HTML page; since YUI is written in Javascripts you need to include JS scripts as usual<br />
+        <code>
+          &lt;script src="http://yui.yahooapis.com/2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js"&gt;&lt;/script&gt;
+        </code>
+        YUI is composed by several JS files, one for each widget or utility and some other spare JS and CSS fiels, that needs to be included in the HTML page as needed and in the right order.<br />
+        For this reason YUI is provided of some utilities
+        <ul>
+          <li><a href="http://developer.yahoo.com/yui/yuiloader/" target="_blank">YUI Loader Utility</a></li>
+          <li><a href="http://developer.yahoo.com/yui/articles/hosting/" target="_blank">YUI Dependency configurator</a></li>
+          <li><a href="http://developer.yahoo.com/yui/phploader/" target="_blank">YUI PHP Loader Utility [beta]</a></li>
+        </ul>
+        CIwY, at the moment, uses PHPloader (with some little customizations) to correctly embed YUI core in the HTML page.<br />
+        You can use <dfn>$this->ciwy->yuiTags()</dfn> without parameters to get HTML tags that will embed YUI core in your pages.<br />
+        <code>
+          &lt;?php echo $this-&gt;ciwy-&gt;yuiTags(); ?&gt;<br />
+        </code>
+        <p class="important">
+          <strong>Note:</strong> For better page rendering perfomance fetch the output of this function in two part.<br />
+          Fetch CSS on the top of the page in the header using <dfn>$this-&gt;ciwy-&gt;yuiTags(YUI_CSS);</dfn><br />
+          Fetch JS code on the bottom of the page near the closing body tag using <dfn>$this-&gt;ciwy-&gt;yuiTags(YUI_JS);</dfn>
+        </p>
+      </p>
+
+      <h3>Place the YUI widget</h3>
+      <p>
+        To place the YUI widget in the page you need a 'container'. Usually is a div like this
+        <code>
+          &lt;div id="container-name"&gt;&lt;/div&gt;
+        </code>
+        CIwY will provide the appropriate container for each widget instantiated with <dfn>$this->ciwy->container('widget_name')</dfn> function.<br />
+        The function will return the HTML code of the current instance of the given 'widget_name'.
+        <code>
+          &lt;?php echo $this-&gt;ciwy-&gt;container('calendar'); ?&gt;<br />
+        </code>
+      </p>
+
+      <h3>Generate the JS code to run YUI</h3>
+      <p>
+        To have YUI working in the page is necessary to run some JS code. The appropriate JS code is generated by <dfn>$this->ciwy->generate()</dfn> function.<br />
+        <p class="important"><strong>Note:</strong> For better page rendering perfomance, place this function in the bottom of the page near the closing body tag.</p>
+        <code>
+          &lt;?php echo $this->ciwy->generate(); ?&gt;<br />
+        </code>
+      </p>
+
+      <h3>Skin the HTML page</h3>
+      <p>
+        YUI needs some CSS rules to skin its widgets. To use provided YUI skin, just apply the class 'yui-skin-sam' to the html body
+        <code>
+          &nbsp; &lt;body class="yui-skin-sam"&gt;<br />
+        </code>
+        You can provide your personalized CSS ruleset. For more info read <a href="http://developer.yahoo.com/yui/articles/skinning/" target="_blank">YUI 2: Understanding Skins</a> at Yahoo! Developer Network.<br /><br />
+      </p>
+
+      <h3>The HTML page template</h3>
+      <p>
+        Some rule have to be respected writing HTML template page:
+        <ol>
+          <li>Skin the HTML body with class 'yui-skin-sam';</li>
+          <li>The page must have 'YUI tags' and 'JS code' to run YUI (HTML standards recomands to put those just before the body closing tag);</li>
+          <li>The container can be put everywhere in the page.</li>
+        </ol>
+        <code>
+          &lt;html&gt;<br />
+          &nbsp; &lt;head&gt;<br />
+          &nbsp;&nbsp;&nbsp; &lt;title&gt;Calendar example&lt;/title&gt;<br />
+          <span style="color:#FF0000">&nbsp;&nbsp;&nbsp; &lt;?php echo $this-&gt;ciwy-&gt;yuiTags(YUI_CSS); ?&gt;</span><br />
+          &nbsp; &lt;/head&gt;<br />
+          &nbsp; &lt;body class="yui-skin-sam"&gt;<br />
+          &nbsp;&nbsp;&nbsp; [...] other HTML tags [...]<br />
+          <span style="color:#00A000">&nbsp;&nbsp;&nbsp; &lt;?php echo $this-&gt;ciwy-&gt;container('calendar'); ?&gt;</span><br />
+          &nbsp;&nbsp;&nbsp; [...] other HTML tags [...]<br />
+          <span style="color:#FF0000">&nbsp;&nbsp;&nbsp; &lt;?php echo $this-&gt;ciwy-&gt;yuiTags(YUI_JS); ?&gt;</span><br />
+          <span style="color:#A0A000">&nbsp;&nbsp;&nbsp; &lt;?php echo $this-&gt;ciwy-&gt;generate(); ?&gt;</span><br />
+          &nbsp; &lt;/body&gt;<br />
+          &lt;/html&gt;<br />
+        </code>
+      </p>
+
+      <h3>The final result</h3>
+      <p>
+        If all ingredients are combined correctly the final result will be like this
+        <code>
+          &lt;html&gt;<br />
+          &nbsp; &lt;head&gt;<br />
+          &nbsp;&nbsp;&nbsp; &lt;title&gt;Calendar example&lt;/title&gt;<br />
+          <span style="color:#FF0000">&nbsp;&nbsp;&nbsp; &lt;link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/calendar/assets/skins/sam/calendar.css" /&gt;</span><br />
+          &nbsp; &lt;/head&gt;<br />
+          &nbsp;&nbsp;&nbsp; &lt;body class="yui-skin-sam"&gt;<br />
+          &nbsp;&nbsp;&nbsp; [...] other HTML tags [...]<br />
+          <span style="color:#00A000">&nbsp;&nbsp;&nbsp; &lt;div id="cal1Container"&gt;&lt;/div&gt;</span><br />
+          &nbsp;&nbsp;&nbsp; [...] other HTML tags [...]<br />
+          <span style="color:#FF0000">&nbsp;&nbsp;&nbsp; &lt;script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js"&gt;&lt;/script&gt;</span><br />
+          <span style="color:#FF0000">&nbsp;&nbsp;&nbsp; &lt;script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/calendar/calendar-min.js"&gt;&lt;/script&gt;</span><br />
+          <span style="color:#A0A000">&nbsp;&nbsp;&nbsp; &lt;script type="text/javascript"&gt;<br />
+            &nbsp; (function() {<br />
+            &nbsp;&nbsp;&nbsp; var Dom = YAHOO.util.Dom,<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Event = YAHOO.util.Event;<br />
+            &nbsp;&nbsp;&nbsp; cal1 = new YAHOO.widget.Calendar("cal1", "cal1Container", {<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MD_DAY_POSITION:1, <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MD_MONTH_POSITION:2, <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MDY_DAY_POSITION:1, <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MDY_MONTH_POSITION:2, <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MDY_YEAR_POSITION:3, <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MY_MONTH_POSITION:1, <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MY_YEAR_POSITION:2, <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MY_LABEL_MONTH_POSITION:1, <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MY_LABEL_YEAR_POSITION:2, <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MONTHS_LONG:["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"], <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MONTHS_SHORT:["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"], <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WEEKDAYS_SHORT:["Do", "Lu", "Ma", "Me", "Gi", "Ve", "Sa"], <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WEEKDAYS_MEDIUM:["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"], <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WEEKDAYS_LONG:["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"], <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WEEKDAYS_1CHAR:["D", "L", "M", "M", "G", "V", "S"]<br />
+            &nbsp;&nbsp;&nbsp; });<br />
+            &nbsp;&nbsp;&nbsp; cal1.render();<br />
+            &nbsp; })();<br />
+            &nbsp;&nbsp;&nbsp; &lt;/script&gt;</span><br />
+          &nbsp; &lt;/body&gt;<br />
+          &lt;/html&gt;<br />
+        </code>
+        <img src="../images/calendar-sam-thumb.png" alt="Calendar sample" />
+      </p>
+
+    </div>
+    <!-- END CONTENT -->
+
+    <div id="footer">
+      <p>
+        Previous Topic:&nbsp;&nbsp;<a href="../general/ciwy.html">Ciwy Class</a>
+        &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        Next Topic:&nbsp;&nbsp;<a href="../general/yuiloader.html">Loading a YUI component</a>
+      </p>
+      <p><a href="http://codeigniter.com">CodeIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2006-2009 &nbsp;&middot;&nbsp; <a href="http://ellislab.com/">Ellislab, Inc.</a></p>
+    </div>
+
+  </body>
+</html>
