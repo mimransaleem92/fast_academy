@@ -280,8 +280,7 @@ class test_marksheet1 extends Base_Controller{
 			$subject_total = $total -> total_marks; 
 			foreach ($student_list as $student)
 			{	
-			 
-			    if( isset($student->cell_phone_father) && strlen($student->cell_phone_father) == 12 && !empty($student->obtained_marks) ){
+			    if( $student->message_sent == 'N' && isset($student->cell_phone_father) && strlen($student->cell_phone_father) == 12 && !empty($student->obtained_marks) ){
 			        $student_name = substr($student->student_name, 0, 13);
 					$mobile = $student->cell_phone_father;
 					
@@ -314,11 +313,13 @@ class test_marksheet1 extends Base_Controller{
 						print curl_error($ch);
 					else
 						curl_close($ch);
-				    //$response = '8:dfdsfdsf';
+				    
 					//Write out the response
-					$sms_flag = explode(':', $response);
+					$sms_flag = explode(' ', $response);
 					//echo $sms_flag[0]. $student_name . '<br/>';
-					Base_model::insert_message_log($course_id, $mobile, $message, 1, $sms_flag[0]);
+					if($sms_flag[0] == 'OK'){
+						$this->test_marksheet1_model->update_status($student->student_id, 'R'); 
+					}
 					Base_model::insert_message_log($course_id, $mobile, $message, 1, $sms_flag[0]);
 				}
 			}
@@ -381,12 +382,14 @@ class test_marksheet1 extends Base_Controller{
 						print curl_error($ch);
 					else
 						curl_close($ch);
-				    //$response = '8:dfdsfdsf';
+				    
 					//Write out the response
-					$sms_flag = explode(':', $response);
+					$sms_flag = explode(' ', $response);
 					//echo $sms_flag[0]. $student_name . '<br/>';
 					Base_model::insert_message_log($course_id, $mobile, $message, 1, $sms_flag[0]);
-					$this->test_marksheet1_model->update_status($id);
+					if($sms_flag[0] == 'OK'){
+						$this->test_marksheet1_model->update_status($id);
+					}
 				}
 			}
 		}

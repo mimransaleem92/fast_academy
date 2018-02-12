@@ -183,12 +183,14 @@ class test_marksheet1_model extends Base_Model{
 	    $this->db->query("UPDATE `test_subject_monthly_marks` SET `message_sent_on`=CURRENT_TIMESTAMP WHERE `course_id` = '".$course_id."' AND `subject_id` = '".$subject_id."' AND `month` = '".$term."' AND `batch_id` = '$batch_id'");
 	   
 	}
-	
-	function update_status($student_id){
+	/*
+		status Y for Absent and R for Result
+	*/
+	function update_status($student_id, $status = 'Y'){ 
 		$batch_id   = $this->session->userdata(SESSION_CONST_PRE.'batch_id');
 		$where = array ('student_id'=>$student_id, 'subject_id'=>$_POST['subject_id'], 'batch_id'=>$batch_id, 'month'=>$_POST['term']);
 		
 		$this->db->where($where);
-		$this->db->update('test_student_subject_monthly', array('message_sent'=>'Y'));
+		$this->db->update('test_student_subject_monthly', array('message_sent'=>$status));
 	}
 }
