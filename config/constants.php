@@ -26,7 +26,7 @@ define('ENABLE_FEE_MODULE', '1');
 define('ENABLE_FINANCE_MODULE', '0');
 define('ENABLE_HR_MODULE', '0');
 define('SMS_API_USERNAME', '923336318287');
-define('SMS_API_PASSWORD', '4586');
+define('SMS_API_PASSWORD', '123');
 
 /*
 |--------------------------------------------------------------------------
