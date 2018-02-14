@@ -42,6 +42,7 @@
 							<th><?php echo Base_Controller::ToggleLang('Received For Fee of Year');?></th>
 							<th><?php echo Base_Controller::ToggleLang('Discount');?></th>
 							<th align="right" ><?php echo Base_Controller::ToggleLang('Balance');?></th>
+							<th align="right" ><?php echo Base_Controller::ToggleLang('SMS');?></th>
                           </tr></thead>
                   		<?php
                   		  $b = isset($_POST['batch_id']) ? $_POST['batch_id'] : $this->session->userdata(SESSION_CONST_PRE.'batch_id');
@@ -100,7 +101,7 @@
                           ?>
 	                          <tr>
 	                            <td><? echo $i;?></td>
-								<td><a href="<?php echo base_url().'students/student_profile/'.$values->student_id;?>#tabs_3" ><?php echo $values->admission_number; ?></a></td>
+								<td><a href="<?php echo base_url().'teset_students/student_profile/'.$values->student_id;?>#tabs_3" ><?php echo $values->admission_number; ?></a></td>
 								<td title="<?php echo $contact_title;?>"><?php echo $values->student_name?></td>
 								<td><?php echo $values->course_name.' - '.$values->section?></td>
 								<!-- <td style="width: 80px">
@@ -113,6 +114,14 @@
 								<td align="right" ><?php echo number_format($values->total_payment, 2);?></td>
 								<td align="right" ><?php echo number_format($values->total_discount+$outstanding_discount, 2);?></td>
 								<td align="right" ><?php echo number_format($values->pending_amount+$outstanding_pending, 2);?></td>
+								<td align="right" >
+									<?php 
+										if($values->pending_amount > 0){
+											
+										?>
+										<span style="float: right;" id="cell<?php echo $values->student_id?>"> <button type="button" onclick="onclick_reminder('<?php echo $values->student_id?>', this)" class="btn btn-xs red" ><? echo ($values->fee_pending_sms_count > 0) ? ''.$values->fee_pending_sms_count : '';?> Reminder</button></span>
+									<?php } ?>
+								</td>
 	                          </tr>
 	                  <?php 	}
                           }

@@ -282,7 +282,7 @@ class Reports_model extends Base_Model{
 			$where['sp.fee_desc'] = 'Tuition Fee';
 		}
 		
-		$this->db->select("sp.*, b.batch_name, s.student_name, s.admission_number, s.section, c.course_name, s.cell_phone_father, s.cell_phone_mother");
+		$this->db->select("sp.*, b.batch_name, s.student_name, s.admission_number, s.section, c.course_name, s.cell_phone_father, s.cell_phone_mother, s.fee_pending_sms_count");
 		$this->db->select("SUM(sp.due_amount) as total_due, SUM(sp.payment_amount) as total_payment, SUM(sp.discount_amount) as total_discount, (SUM(sp.due_amount)-SUM(sp.payment_amount) - SUM(sp.discount_amount)) as pending_amount, DATE_FORMAT(sp.due_date, '%d-%m-%Y') as duedate",FALSE);
 		$this->db->from('student_payments sp');
 		//$this->db->join('students s','s.student_id = sp.student_id');
@@ -350,5 +350,10 @@ class Reports_model extends Base_Model{
 		$query = $this->db->get();
 		//echo $str = $this->db->last_query();
 		return $query->result();
+	}
+	
+	function update_message_count($student_id){ 
+		
+		$this->db->query("UPDATE `students` SET fee_pending_sms_count = fee_pending_sms_count + 1 WHERE `student_id` = '".$student_id."'");
 	}
 }

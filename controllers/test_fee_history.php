@@ -225,4 +225,40 @@ class test_fee_history extends Base_Controller{
 		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
 		$objWriter->save('php://output');	
 	}
+	
+	function sms_fee_reminder(){
+		$user_id = $this->session->userdata(SESSION_CONST_PRE.'userId');
+		$batch   = $this->session->userdata(SESSION_CONST_PRE.'batch_id');
+		
+		{
+			
+			$id = $this->uri->segment(3);
+			$student_list = $this->Reports_model->get_student_info($id);
+			//print_r($student_list);
+			foreach ($student_list as $student)
+			{	
+			    if( isset($student->cell_phone_father) && strlen($student->cell_phone_father) == 12  ){
+			        
+					$student_name = substr($student->student_name, 0, 13);
+					$mobile = $student->cell_phone_father;
+					
+					$message = "AOA". '\n';
+					$message .= "Please clear padding fee of ".$student_name.".\n";
+					
+					$message .= "Principal". '\n';
+					$message .= "FAST Haroonabad". '\n';
+					$message .= "03336318287";
+					//echo $message. strlen($message) . '<br>';
+					
+					$sms_flag = $this->send_message($mobile, $message, $sender = 'FastAcademy');
+					//echo $sms_flag[0]. $student_name . '<br/>';
+					Base_model::insert_message_log($id, $mobile, $message, 1, $sms_flag[0]);
+					if($sms_flag[0] == 'OK'){
+						$this->Reports_model->update_message_count($id);
+					}
+				}
+			}
+		}
+		echo 'SMS Sent';
+	}
 }

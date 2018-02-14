@@ -308,4 +308,24 @@ class Base_Controller extends CI_Controller {
 			
 			return $label;
 	}
+	
+	function send_message($mobile, $message, $sender = 'FastAcademy'){
+		
+		$url = "http://bulksms.com.pk/api/sms.php?username=".SMS_API_USERNAME."&password=".SMS_API_PASSWORD."&sender=".urlencode($sender)."&mobile=".urlencode($mobile)."&message=".urlencode($message);
+
+		//Curl start 
+		$ch = curl_init();
+		$timeout = 30;
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt ($ch, CURLOPT_URL, $url);
+		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+		
+		$response = curl_exec($ch);
+		if(curl_errno($ch))
+			print curl_error($ch);
+		else
+			curl_close($ch);
+		$res = explode(' ', $response);
+		return $res;
+	}
 }

@@ -401,6 +401,21 @@ function onclick_excel(obj){
 	
 	window.open( arr +'/excel/'+param,'_blank');
 }
+
+function onclick_reminder(id, obj){
+	obj.disabled = true;
+	var _url = '<?php echo base_url().$model.'/sms_fee_reminder/';?>'+id;
+	chatContent = $('#cell'+id);
+	$.ajax({
+		url: _url,
+		type: 'POST',
+		success: function(result) {
+			chatContent.html(result);
+			afterAjax();
+		}
+	});
+}
+			
 function db_date(obj){
 	arr1 = obj.split('-');
 	newValue = arr1[2] + '-' + arr1[1] + '-' + arr1[0];
