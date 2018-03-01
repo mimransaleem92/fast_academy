@@ -379,7 +379,7 @@ class Gazettesheet extends Base_Controller{
 		//$this->load->view('reports/test_fee_report_excel', $this->data);
 	}
 	
-	function send_sms11(){
+	function send_sms(){
 		$batch   = $this->session->userdata(SESSION_CONST_PRE.'batch_id');
 		$user_id = $this->session->userdata(SESSION_CONST_PRE.'userId');
 		$sender = "FAST Notification" ;
@@ -391,45 +391,31 @@ class Gazettesheet extends Base_Controller{
 			foreach ($student_arr as $student_id)
 			{	
 				$res = $this->Gazettesheet_model->get_student_result($student_id, $batch, $term);
-				//var_dump($res);
-		
+				//var_dump($res); die;
 				if( isset($res->cell_phone_father) ){
 					$student_name = substr($res->student_name, 0, 13);
 					$mobile = $res->cell_phone_father;
 					$precentage = ( $res->marks * 100 )/ $res->totals . '\n';
-					echo '13';
+					 
 					$message = "AOA". '\n';
-					$message .= "Result of ".$student_name." for ".$arr_m[$term]." Tests is as under\n";
+					$message .= "Result of ".$student_name." for Test Session is as under\n";
 					$message .= "Subject: ALL ". '\n';
 					$message .= "Total Marks: " .$res->totals . '\n';
 					$message .= "Obt'nd Marks: " . number_format($res->marks) . '\n';
-					$message .= "%: " . number_format($precentage) . '\n';
+					$message .= "%: " . number_format($precentage, 2) . '\n';
 					$message .= "Principal". '\n';
 					$message .= "FAST Haroonabad". '\n';
 					$message .= "03336318287";
-					//echo $message. strlen($message);
-					//die('ff');
-					$url = "http://bulksms.com.pk/api/sms.php?username=".SMS_API_USERNAME."&password=".SMS_API_PASSWORD."&sender=".urlencode($sender)."&mobile=".urlencode($mobile)."&message=".urlencode($message);
-
-					///Curl start 
-					$ch = curl_init();
-					$timeout = 30;
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-					curl_setopt ($ch, CURLOPT_URL, $url);
-					curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-					
-					$response = curl_exec($ch);
-					if(curl_errno($ch))
-						print curl_error($ch);
-					else
-						curl_close($ch);
-					
-					///Write out the response
-					$sms_flag = explode(':', $response);
-					echo $sms_flag[0]. '<br/>';
+					#echo $message;
+					#$sms_flag = array('OK','77989');
+					$sms_flag = $this->send_message($mobile, $message);
+					Base_model::insert_message_log($res->course_id, $mobile, $message, 1, $sms_flag[0]);
+					if($sms_flag[0] == 'OK'){
+						$this->Gazettesheet_model->update_message_count($student_id);
+					}
 				}
 			}
 		}
-		redirect('resultsheet','location');
+		redirect('gazettesheet','location');
 	}
 }

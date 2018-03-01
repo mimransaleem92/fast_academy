@@ -74,7 +74,7 @@
 										 	  $term_id = isset($_POST['term']) ? $_POST['term']: 1;?>
 										<a class="btn green" href="<?php echo base_url().$model.'/print_view/?course_id='.$c."&section=".$sec."&term=". $term;?>" target="_blank"><i class="fa fa-print"></i> Print</a>
 										<a class="btn blue" href="<?php echo base_url().$model.'/excel/?course_id='.$c;?>" target="_blank"><i class="fa fa-print"></i> EXCEL </a>
-										<button class="btn blue hide" type="button" onclick="send_sms();" ><i class="fa fa-mail"></i> Send SMS </button>
+										<button class="btn blue" type="button" onclick="send_sms();" ><i class="fa fa-mail"></i> Send SMS </button>
 										
 									</div>
 								</div>
@@ -117,8 +117,9 @@
 				                			$param = 'student_id='.$student_id."&course_id=".$c."&section=".$sec."&sid=".$subject_id."&t=".$term;
 				                			$url   = base_url().$model."/add_marks";
 											$row_total = $row_obtain = 0;
+											$row_color = ($student->result_sms_sent > 0) ? 'background-color: green; color: #FFF' : '';
 				                	?>
-				                	<tr>
+				                	<tr style="<?= $row_color ?>">
 										<td class="hidden-xs hidden-sm text-center" ><input type="checkbox" name="selected_id_<?php echo $s;?>" id="selected_id_<?php echo $s;?>" <?php //if($values->status == 'Issued') echo 'disabled="disabled"';?> value="<?php echo $student->student_id;?>" /></td>
 				                		<td class="text-center"><?php echo $s;?></td>
 				                		<td style="padding-left: 4px"><?php echo $student->admission_number;?></td>

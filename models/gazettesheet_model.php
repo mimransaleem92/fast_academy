@@ -46,7 +46,7 @@ class Gazettesheet_model extends Base_Model{
 		$this->db->select('s.student_name, s.course_id, c.course_name, s.cell_phone_father, sum(smm.total_marks) as totals, sum(m.obtained_marks) as marks');
 		$this->db->from('students s');
 		$this->db->join('courses c','s.course_id = c.course_id');
-		$this->db->join('test_student_subject_monthly m','s.student_id = m.student_id');
+		$this->db->join('test_student_subject_monthly m',"s.student_id = m.student_id and m.obtained_marks != ''");
 		$this->db->join('subjects sb','sb.subject_id = m.subject_id');
 		$this->db->join('test_subject_monthly_marks smm','smm.subject_id = sb.subject_id and smm.month = m.`month` and smm.batch_id = m.batch_id and smm.course_id = s.course_id');
 		$this->db->where(array('m.student_id'=>$student_id, 'm.batch_id'=>$batch));
@@ -171,5 +171,11 @@ class Gazettesheet_model extends Base_Model{
 			         (Select $course_id, $batch_id, $term, subject_id, 50 from subjects where is_active = 'Y');";
     		
     	$this->db->query($sql);
+	}
+	
+	
+	function update_message_count($student_id){
+		
+		$this->db->query("UPDATE `students` SET result_sms_sent = result_sms_sent + 1 WHERE `student_id` = '".$student_id."'");
 	}
 }
